@@ -79,6 +79,12 @@
       nameEl.classList.remove("error");
       textEl.classList.remove("error");
 
+      if(textEl.value === "" && nameEl.value === ""){
+        nameEl.classList.add("error");
+        textEl.classList.add("error");
+        return;
+      }
+
       if(nameEl.value === ""){ 
         nameEl.classList.add("error");
         return;
