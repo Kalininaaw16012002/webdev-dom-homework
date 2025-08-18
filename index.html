@@ -79,7 +79,13 @@
       nameEl.classList.remove("error");
       textEl.classList.remove("error");
 
-      if(nameEl.value === ""){
+      if(textEl.value === "" && nameEl.value === ""){
+        nameEl.classList.add("error");
+        textEl.classList.add("error");
+        return;
+      }
+
+      if(nameEl.value === ""){ 
         nameEl.classList.add("error");
         return;
       }
@@ -91,14 +97,14 @@
 
       const oldHtml = listEl.innerHTML;
       listEl.innerHTML = oldHtml + `<li class="comment">
-          <div class="comment-header">
+          <div class="comment-header"> 
             <div>${nameEl.value}</div>
             <div>${date1 + " " + date2}</div>
           </div>
           <div class="comment-body">
             <div class="comment-text">
               ${textEl.value}
-            </div>
+            </div> 
           </div>
           <div class="comment-footer">
             <div class="likes">
