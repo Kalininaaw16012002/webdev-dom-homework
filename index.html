@@ -74,6 +74,65 @@
     let date1 = new Date().toLocaleDateString();
     let date2 = new Date().toLocaleTimeString().slice(0,-3);
 
+    const comments = {
+       name: "Глеб Фокин",
+        date: "12.02.22 12:18",
+        text: "Это будет первый комментарий на этой странице",
+        quantity: 3, 
+        aktive: false
+      , 
+       name: "Варвара Н.",
+        date: "13.02.22 19:22",
+        text: "Мне нравится как оформлена эта страница! ❤",
+        quantity: 75, 
+        aktive: true
+      };
+
+    const renderComments = () => {
+      listEl.innerHTML = comments
+        .map((comment, index) => {
+          return `<li class="comment">
+          <div class="comment-header"> 
+            <div>${comment.name}</div>
+            <div>${comment.date}</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              ${comment.text}
+            </div> 
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">${comment.quantity}</span>
+              <button date-index=${index} class="like-button ${comment.aktive ? '-active-like' : ''}"></button>
+            </div>
+          </div>
+        </li>`;;
+        })
+        .join("");
+    };
+
+    const likeButtons = () => {
+      const likeElements = document.querySelectorAll('.like-button');
+
+      for (const likeElement of likeElements) {
+        likeElement.addEventListener("click", () => {
+          if (comments[likeElement.dataset.index].aktive) {
+            console.log(es);  
+            comments[likeElement.dataset.index].aktive === false;
+            comments[likeElement.dataset.index].quantity--;
+          } else {
+            console.log(no);
+            comments[likeElement.dataset.index].aktive === true;
+            comments[likeElement.dataset.index].quantity++;
+          }
+           renderComments();
+        });
+      }
+    };
+
+    likeButtons();
+    renderComments();
 
     buttonEl.addEventListener('click', () => {
       nameEl.classList.remove("error");
@@ -95,28 +154,21 @@
         return;
       }
 
-      const oldHtml = listEl.innerHTML;
-      listEl.innerHTML = oldHtml + `<li class="comment">
-          <div class="comment-header"> 
-            <div>${nameEl.value}</div>
-            <div>${date1 + " " + date2}</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              ${textEl.value}
-            </div> 
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">0</span>
-              <button class="like-button -active-like"></button>
-            </div>
-          </div>
-        </li>`;
-        nameEl.value ="";
-        textEl.value ="";
-    })
+      const NewComment = {
+        name: nameEl.value,
+        date: (date1 + '' + date2),
+        text: textEl.value,
+        quantity: 0,
+        aktive: false
+      };
 
+      comments.push(NewComment);
+      renderComments();
+      likeButtons();
+
+      nameEl.value ="";
+      textEl.value ="";
+    })
     console.log("It works!");
   </script>
 </html>
