@@ -74,19 +74,19 @@
     let date1 = new Date().toLocaleDateString();
     let date2 = new Date().toLocaleTimeString().slice(0,-3);
 
-    const comments = {
-       name: "Глеб Фокин",
+    const comments = [
+        {name: "Глеб Фокин",
         date: "12.02.22 12:18",
         text: "Это будет первый комментарий на этой странице",
         quantity: 3, 
-        aktive: false
+        aktive: false}
       , 
-       name: "Варвара Н.",
+       {name: "Варвара Н.",
         date: "13.02.22 19:22",
         text: "Мне нравится как оформлена эта страница! ❤",
         quantity: 75, 
         aktive: true
-      };
+      }];
 
     const renderComments = () => {
       listEl.innerHTML = comments
@@ -104,7 +104,7 @@
           <div class="comment-footer">
             <div class="likes">
               <span class="likes-counter">${comment.quantity}</span>
-              <button date-index=${index} class="like-button ${comment.aktive ? '-active-like' : ''}"></button>
+              <button data-index=${index} class="like-button ${comment.aktive ? '-active-like' : ''}"></button>
             </div>
           </div>
         </li>`;;
@@ -116,23 +116,25 @@
       const likeElements = document.querySelectorAll('.like-button');
 
       for (const likeElement of likeElements) {
-        likeElement.addEventListener("click", () => {
-          if (comments[likeElement.dataset.index].aktive) {
-            console.log(es);  
-            comments[likeElement.dataset.index].aktive === false;
+        likeElement.addEventListener("click", () => { 
+          console.log(comments[likeElement.dataset.index].aktive);
+          if (comments[likeElement.dataset.index].aktive === true) {
+            console.log('es');  
+            comments[likeElement.dataset.index].aktive = false;
             comments[likeElement.dataset.index].quantity--;
           } else {
-            console.log(no);
-            comments[likeElement.dataset.index].aktive === true;
+            console.log('no');
+            comments[likeElement.dataset.index].aktive = true;
             comments[likeElement.dataset.index].quantity++;
           }
-           renderComments();
+          renderComments();
+          likeButtons();
         });
       }
     };
 
-    likeButtons();
     renderComments();
+    likeButtons();
 
     buttonEl.addEventListener('click', () => {
       nameEl.classList.remove("error");
