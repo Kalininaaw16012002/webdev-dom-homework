@@ -1,155 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <title>Проект "Комменты"</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+    <head>
+        <title>Проект "Комменты"</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
 
-  <body>
-    <div class="container">
-      <ul class="comments" id="list"></ul>
-      <div class="add-form">
-        <input
-          type="text"
-          class="add-form-name"
-          id="name"
-          placeholder="Введите ваше имя"
-        />
-        <textarea
-          type="textarea"
-          class="add-form-text"
-          id="text"
-          placeholder="Введите ваш коментарий"
-          rows="4"
-        ></textarea>
-        <div class="add-form-row">
-          <button class="add-form-button" id="add">Написать</button>
-        </div>
-      </div>
-    </div>
-  </body>
-
-  <script>
-    "use strict";
-    const nameEl = document.getElementById('name');
-    const textEl = document.getElementById('text');
-    const buttonEl = document.getElementById('add');
-    const listEl = document.getElementById('list');
-    let date1 = new Date().toLocaleDateString();
-    let date2 = new Date().toLocaleTimeString().slice(0,-3);
-
-    const comments = [
-        {name: "Глеб Фокин",
-        date: "12.02.22 12:18",
-        text: "Это будет первый комментарий на этой странице",
-        quantity: 3, 
-        aktive: false}
-      , 
-       {name: "Варвара Н.",
-        date: "13.02.22 19:22",
-        text: "Мне нравится как оформлена эта страница! ❤",
-        quantity: 75, 
-        aktive: true
-      }];
-
-    const renderComments = () => {
-      listEl.innerHTML = comments
-        .map((comment, index) => {
-          return `<li class="comment" data-index=${index}>
-          <div class="comment-header"> 
-            <div>${comment.name}</div>
-            <div>${comment.date}</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              ${comment.text}
-            </div> 
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">${comment.quantity}</span>
-              <button data-index=${index} class="like-button ${comment.aktive ? '-active-like' : ''}"></button>
+    <body>
+        <div class="container">
+            <ul class="comments" id="list"></ul>
+            <div class="add-form">
+                <input
+                    type="text"
+                    class="add-form-name"
+                    id="name"
+                    placeholder="Введите ваше имя"
+                />
+                <textarea
+                    type="textarea"
+                    class="add-form-text"
+                    id="text"
+                    placeholder="Введите ваш коментарий"
+                    rows="4"
+                ></textarea>
+                <div class="add-form-row">
+                    <button class="add-form-button" id="add">Написать</button>
+                </div>
             </div>
-          </div>
-        </li>`;;
-        })
-        .join("");
-    };
-
-    const replyСomment = () => {
-      const replyElements = document.querySelectorAll('.comment');
-
-      for (const replyElement of replyElements) {
-        replyElement.addEventListener("click", () => {
-          const index = replyElement.dataset.index;
-          const comment = comments[index];
-          
-          textEl.value = `* ${comment.name}: ${comment.text} \n\n`;
-        });
-      }
-    }
-
-    const likeButtons = () => {
-      const likeElements = document.querySelectorAll('.like-button');
-
-      for (const likeElement of likeElements) {
-        likeElement.addEventListener("click", (event) => { 
-          event.stopPropagation();
-          if (comments[likeElement.dataset.index].aktive === true) {
-            comments[likeElement.dataset.index].aktive = false;
-            comments[likeElement.dataset.index].quantity--;
-          } else {
-            comments[likeElement.dataset.index].aktive = true;
-            comments[likeElement.dataset.index].quantity++;
-          }
-          renderComments();
-          likeButtons();
-          replyСomment();
-        });
-      }
-    };
-
-    renderComments();
-    likeButtons();
-    replyСomment();
-
-    buttonEl.addEventListener('click', () => {
-      nameEl.classList.remove("error");
-      textEl.classList.remove("error");
-
-      if(textEl.value === "" && nameEl.value === ""){
-        nameEl.classList.add("error");
-        textEl.classList.add("error");
-        return;
-      }
-
-      if(nameEl.value === ""){ 
-        nameEl.classList.add("error");
-        return;
-      }
-
-      if(textEl.value === ""){
-        textEl.classList.add("error");
-        return;
-      }
-
-      const NewComment = {
-        name: nameEl.value.replaceAll("<", "&lt;").replaceAll(">", "&gt;"),
-        date: (date1 + ' ' + date2),
-        text: textEl.value.replaceAll("<", "&lt;").replaceAll(">", "&gt;"),
-        quantity: 0,
-        aktive: false
-      };
-
-      comments.push(NewComment);
-      renderComments();
-      likeButtons();
-      replyСomment();
-
-      nameEl.value ="";
-      textEl.value ="";
-    })
-    console.log("It works!");
-  </script>
+        </div>
+        <script type="module" src="index.js"></script>
+    </body>
 </html>
