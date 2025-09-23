@@ -11,7 +11,7 @@ export const replyСomment = () => {
             const index = replyElement.dataset.index
             const comment = comments[index]
 
-            textEl.value = `* ${comment.name}: ${comment.text} \n\n`
+            textEl.value = `* ${comment.author}: ${comment.text} \n\n`
         })
     }
 }
@@ -24,10 +24,10 @@ export const likeButtons = () => {
             event.stopPropagation()
             if (comments[likeElement.dataset.index].aktive === true) {
                 comments[likeElement.dataset.index].aktive = false
-                comments[likeElement.dataset.index].quantity--
+                comments[likeElement.dataset.index].likes--
             } else {
                 comments[likeElement.dataset.index].aktive = true
-                comments[likeElement.dataset.index].quantity++
+                comments[likeElement.dataset.index].likes++
             }
             likeButtons()
             replyСomment()
@@ -63,10 +63,10 @@ export const initAddCommentListener = () => {
         }
 
         const NewComment = {
-            name: nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+            author: nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
             date: date1 + ' ' + date2,
             text: textEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-            quantity: 0,
+            likes: 0,
             aktive: false,
         }
 

@@ -7,7 +7,7 @@ export const renderComments = () => {
         .map((comment, index) => {
             return `<li class="comment" data-index=${index}>
           <div class="comment-header"> 
-            <div>${comment.name}</div>
+            <div>${comment.author.name}</div>
             <div>${comment.date}</div>
           </div>
           <div class="comment-body">
@@ -17,7 +17,7 @@ export const renderComments = () => {
           </div>
           <div class="comment-footer">
             <div class="likes">
-              <span class="likes-counter">${comment.quantity}</span>
+              <span class="likes-counter">${comment.likes}</span>
               <button data-index=${index} class="like-button ${comment.aktive ? '-active-like' : ''}"></button>
             </div>
           </div>
