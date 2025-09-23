@@ -1,5 +1,6 @@
 import { comments } from './comments.js'
 import { renderComments } from './renderComments.js'
+import { updateComments } from './comments.js'
 
 export const replyСomment = () => {
     const textEl = document.getElementById('text')
@@ -69,8 +70,19 @@ export const initAddCommentListener = () => {
             aktive: false,
         }
 
-        comments.push(NewComment)
-        renderComments()
+        fetch('https://wedev-api.sky.pro/api/v1/kalinina/comments', {
+            method: "POST",
+            body: JSON.stringify(NewComment)
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            console.log(data)
+            updateComments(data.comments)
+            renderComments()
+        })
+
+        //comments.push(NewComment)
+       // renderComments()
         likeButtons()
         replyСomment()
 
