@@ -63,11 +63,11 @@ export const initAddCommentListener = () => {
         }
 
         const NewComment = {
-            author: nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-            date: date1 + ' ' + date2,
-            text: textEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-            likes: 0,
-            aktive: false,
+            name: nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+            // date: date1 + ' ' + date2,
+             text: textEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+            // likes: 0,
+            // aktive: false,
         }
 
         fetch('https://wedev-api.sky.pro/api/v1/kalinina/comments', {
@@ -76,13 +76,10 @@ export const initAddCommentListener = () => {
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log(data)
             updateComments(data.comments)
             renderComments()
         })
 
-        //comments.push(NewComment)
-       // renderComments()
         likeButtons()
         replyСomment()
 

@@ -7,7 +7,6 @@ fetch('https://wedev-api.sky.pro/api/v1/kalinina/comments')
         return response.json()
     })
     .then((data) => {
-        console.log(data)
         updateComments(data.comments)
         renderComments()
     })
