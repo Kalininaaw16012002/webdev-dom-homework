@@ -1,14 +1,11 @@
-import { renderComments } from './renderComments.js'
 import { initAddCommentListener } from './initListeners.js'
+import { fetchAndRenderComments } from './fetchAndRenderComments.js'
 import { updateComments } from './comments.js'
+import { renderComments } from './renderComments.js'
 
-fetch('https://wedev-api.sky.pro/api/v1/kalinina/comments')
-    .then((response) => {
-        return response.json()
-    })
-    .then((data) => {
-        updateComments(data.comments)
-        renderComments()
-    })
+fetchAndRenderComments().then((data) => {
+    updateComments(data)
+    renderComments()
+})
 
 initAddCommentListener()
