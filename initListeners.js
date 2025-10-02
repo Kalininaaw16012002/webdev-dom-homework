@@ -60,18 +60,15 @@ export const initAddCommentListener = () => {
             return
         }
 
-        // const NewComment = {
-        //     name: nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-        //     date: date1 + ' ' + date2,
-        //     text: textEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-        //     likes: 0,
-        //     aktive: false,
-        // }
+        document.querySelector('.comment-loading').style.display = 'block'
+        document.querySelector('.add-form').style.display = 'none'
 
         postComments(
             textEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
             nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
         ).then((data) => {
+            document.querySelector('.comment-loading').style.display = 'none'
+            document.querySelector('.add-form').style.display = 'flex'
             updateComments(data)
             renderComments()
             nameEl.value = ''
