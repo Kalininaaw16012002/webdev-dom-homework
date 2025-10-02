@@ -1,5 +1,6 @@
-import { comments } from './comments.js'
+import { comments, updateComments } from './comments.js'
 import { renderComments } from './renderComments.js'
+import { postComments } from './fetchAndRenderComments.js'
 
 export const replyСomment = () => {
     const textEl = document.getElementById('text')
@@ -23,10 +24,10 @@ export const likeButtons = () => {
             event.stopPropagation()
             if (comments[likeElement.dataset.index].aktive === true) {
                 comments[likeElement.dataset.index].aktive = false
-                comments[likeElement.dataset.index].quantity--
+                comments[likeElement.dataset.index].likes--
             } else {
                 comments[likeElement.dataset.index].aktive = true
-                comments[likeElement.dataset.index].quantity++
+                comments[likeElement.dataset.index].likes++
             }
             likeButtons()
             replyСomment()
@@ -39,8 +40,6 @@ export const initAddCommentListener = () => {
     const nameEl = document.getElementById('name')
     const buttonEl = document.getElementById('add')
     const textEl = document.getElementById('text')
-    let date1 = new Date().toLocaleDateString()
-    let date2 = new Date().toLocaleTimeString().slice(0, -3)
     buttonEl.addEventListener('click', () => {
         nameEl.classList.remove('error')
         textEl.classList.remove('error')
@@ -61,20 +60,25 @@ export const initAddCommentListener = () => {
             return
         }
 
-        const NewComment = {
-            name: nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-            date: date1 + ' ' + date2,
-            text: textEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-            quantity: 0,
-            aktive: false,
-        }
+        // const NewComment = {
+        //     name: nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+        //     date: date1 + ' ' + date2,
+        //     text: textEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+        //     likes: 0,
+        //     aktive: false,
+        // }
 
-        comments.push(NewComment)
-        renderComments()
+        postComments(
+            textEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+            nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+        ).then((data) => {
+            updateComments(data)
+            renderComments()
+            nameEl.value = ''
+            textEl.value = ''
+        })
+
         likeButtons()
         replyСomment()
-
-        nameEl.value = ''
-        textEl.value = ''
     })
 }

@@ -17,7 +17,7 @@ export const renderComments = () => {
           </div>
           <div class="comment-footer">
             <div class="likes">
-              <span class="likes-counter">${comment.quantity}</span>
+              <span class="likes-counter">${comment.likes}</span>
               <button data-index=${index} class="like-button ${comment.aktive ? '-active-like' : ''}"></button>
             </div>
           </div>
