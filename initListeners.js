@@ -66,14 +66,33 @@ export const initAddCommentListener = () => {
         postComments(
             textEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
             nameEl.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-        ).then((data) => {
-            document.querySelector('.comment-loading').style.display = 'none'
-            document.querySelector('.add-form').style.display = 'flex'
-            updateComments(data)
-            renderComments()
-            nameEl.value = ''
-            textEl.value = ''
-        })
+        )
+            .then((data) => {
+                document.querySelector('.comment-loading').style.display =
+                    'none'
+                document.querySelector('.add-form').style.display = 'flex'
+                updateComments(data)
+                renderComments()
+                nameEl.value = ''
+                textEl.value = ''
+            })
+            .catch((error) => {
+                document.querySelector('.comment-loading').style.display =
+                    'none'
+                document.querySelector('.add-form').style.display = 'flex'
+
+                if (error.message === 'Failed to fetch') {
+                    alert('Кажется, у вас сломался интернет, попробуйте позже')
+                }
+
+                if (error.message === 'Ошибка сервера') {
+                    alert('Сервер сломался, попробуй позже')
+                }
+
+                if (error.message === 'Неверный запрос') {
+                    alert('Имя и комментарий должны быть не короче 3 символов')
+                }
+            })
 
         likeButtons()
         replyСomment()
