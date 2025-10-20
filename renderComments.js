@@ -34,6 +34,8 @@ export const renderComments = () => {
                     class="add-form-name"
                     id="name"
                     placeholder="Введите ваше имя"
+                    readonly
+                    value ="${name}"
                 />
                 <textarea
                     type="textarea"

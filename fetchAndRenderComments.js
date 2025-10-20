@@ -6,6 +6,12 @@ export const setToken = (newToken) => {
     token = newToken
 }
 
+export let name = ''
+
+export const setName = (newName) => {
+    name = newName
+}
+
 export const fetchAndRenderComments = () => {
     return fetch('https://wedev-api.sky.pro/api/v2/kalinina/comments')
         .then((response) => {
@@ -22,7 +28,7 @@ export const fetchAndRenderComments = () => {
                             .toLocaleTimeString()
                             .slice(0, -3),
                     text: comment.text,
-                    likes: comment.likes,
+                    likes: comment.likes,   
                     isLiked: false,
                 }
             })
