@@ -64,7 +64,7 @@ export const postComments = (text, name) => {
             return fetchAndRenderComments()
         })
 }
-
+ 
 export const login = (login, password) => {
     return fetch(authHost + '/login', {
         method: 'POST',
