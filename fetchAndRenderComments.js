@@ -50,7 +50,7 @@ export const postComments = (text, name) => {
         .then((response) => {
             if (response.status === 500) {
                 throw new Error('Ошибка сервера')
-            }
+            } 
 
             if (response.status === 400) {
                 throw new Error('Неверный запрос')
