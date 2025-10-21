@@ -7,7 +7,7 @@ export const renderRegistration = () => {
 
     const loginHTML = `
     <section class = "add-form">
-        <h1>Форма регистрации</h1>
+        <h1 class="entry-form">Форма регистрации</h1>
         <input 
             type = "text"
             class = "add-form-name"
@@ -23,7 +23,7 @@ export const renderRegistration = () => {
             required 
             />
         <input 
-            type = "text"
+            type = "password"
             class = "add-form-name"
             placeholder = "Введите пароль"
             id ="password"
@@ -48,9 +48,8 @@ export const renderRegistration = () => {
 
     submitButtonEl.addEventListener('click', () => {
         registration(nameEl.value, loginEl.value, passwordEl.value).then((response) => {
-            return response.json
+            return response.json()
         }).then((data) => {
-            console.log(data);
             setToken(data.user.token)
             setName(data.user.name)
             fetchComments()

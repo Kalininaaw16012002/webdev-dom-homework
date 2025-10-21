@@ -1,6 +1,6 @@
 import { comments } from './comments.js'
-import { token } from './fetchAndRenderComments.js'
-import { likeButtons, replyСomment } from './initListeners.js'
+import { name, token } from './fetchAndRenderComments.js'
+import { initAddCommentListener, likeButtons, replyСomment } from './initListeners.js'
 import { renderLogin } from './renderLogin.js'
 
 export const renderComments = () => {
@@ -50,7 +50,7 @@ export const renderComments = () => {
             </div>
             <div class="comment-loading">Комментарий добавляется...</div>`
     
-    const linkToLoginText = `<p> чтобы отправить комментарий, <span class='link-login'>войдите</span></p> `
+    const linkToLoginText = `<p> Чтобы отправить комментарий, <span class='link-login'>войдите</span></p> `
 
     const baseHTML = `<ul class="comments">${coomentsHTML}</ul>${token ? addCommentsHTML: linkToLoginText}`
 

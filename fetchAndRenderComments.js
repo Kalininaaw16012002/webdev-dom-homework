@@ -28,7 +28,7 @@ export const fetchAndRenderComments = () => {
                             .toLocaleTimeString()
                             .slice(0, -3),
                     text: comment.text,
-                    likes: comment.likes,   
+                    likes: comment.likes,
                     isLiked: false,
                 }
             })
@@ -50,7 +50,7 @@ export const postComments = (text, name) => {
         .then((response) => {
             if (response.status === 500) {
                 throw new Error('Ошибка сервера')
-            } 
+            }
 
             if (response.status === 400) {
                 throw new Error('Неверный запрос')
@@ -64,7 +64,7 @@ export const postComments = (text, name) => {
             return fetchAndRenderComments()
         })
 }
- 
+
 export const login = (login, password) => {
     return fetch(authHost + '/login', {
         method: 'POST',

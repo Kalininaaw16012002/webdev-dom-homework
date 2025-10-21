@@ -1,13 +1,13 @@
-import { login, setName, setToken } from "./fetchAndRenderComments.js"
-import { fetchComments } from "./index.js"
-import { renderRegistration } from "./renderRegistration.js"
+import { login, setName, setToken } from './fetchAndRenderComments.js'
+import { fetchComments } from './index.js'
+import { renderRegistration } from './renderRegistration.js'
 
 export const renderLogin = () => {
     const container = document.querySelector('.container')
 
     const loginHTML = `
     <section class = "add-form">
-        <h1>Форма входа</h1>
+        <h1 class="entry-form">Форма входа</h1>
         <input 
             type = "text"
             class = "add-form-name"
@@ -16,7 +16,7 @@ export const renderLogin = () => {
             required 
             />
         <input 
-            type = "text"
+            type = "password"
             class = "add-form-name"
             placeholder = "Введите пароль"
             id ="password"
@@ -39,13 +39,15 @@ export const renderLogin = () => {
     const submitButtonEl = document.querySelector('.button-main')
 
     submitButtonEl.addEventListener('click', () => {
-        login(loginEl.value, passwordEl.value).then((response) => {
-            return response.json
-        }).then((data) => {
-            console.log(data);
-            setToken(data.user.token)
-            setName(data.user.name)
-            fetchComments()
-        })
+        login(loginEl.value, passwordEl.value)
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                console.log(data)
+                setToken(data.user.token)
+                setName(data.user.name)
+                fetchComments()
+            })
     })
 }
