@@ -73,6 +73,10 @@ export const login = (login, password) => {
             password: password,
         }),
     })
+    .then((response) => {
+            if (response.status === 400) {
+                throw new Error('Неверный запрос')
+            }})
 }
 
 export const registration = (name, login, password) => {
@@ -84,4 +88,8 @@ export const registration = (name, login, password) => {
             password: password,
         }),
     })
+    .then((response) => {
+            if (response.status === 400) {
+                throw new Error('Неверный запрос')
+            }})
 }

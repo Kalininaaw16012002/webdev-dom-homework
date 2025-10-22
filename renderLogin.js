@@ -48,6 +48,10 @@ export const renderLogin = () => {
                 setToken(data.user.token)
                 setName(data.user.name)
                 fetchComments()
+            }).catch((error) => {
+                if (error.message === 'Неверный запрос') {
+                    alert('Неправильный ввод логина или пароля')
+                }
             })
     })
 }
