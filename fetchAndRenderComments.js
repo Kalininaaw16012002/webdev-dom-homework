@@ -1,5 +1,19 @@
+const authHost = 'https://wedev-api.sky.pro/api/user'
+
+export let token = ''
+
+export const setToken = (newToken) => {
+    token = newToken
+}
+
+export let name = ''
+
+export const setName = (newName) => {
+    name = newName
+}
+
 export const fetchAndRenderComments = () => {
-    return fetch('https://wedev-api.sky.pro/api/v1/kalinina/comments')
+    return fetch('https://wedev-api.sky.pro/api/v2/kalinina/comments')
         .then((response) => {
             return response.json()
         })
@@ -23,8 +37,11 @@ export const fetchAndRenderComments = () => {
 }
 
 export const postComments = (text, name) => {
-    return fetch('https://wedev-api.sky.pro/api/v1/kalinina/comments', {
+    return fetch('https://wedev-api.sky.pro/api/v2/kalinina/comments', {
         method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
             text,
             name,
@@ -46,4 +63,33 @@ export const postComments = (text, name) => {
         .then(() => {
             return fetchAndRenderComments()
         })
+}
+
+export const login = (login, password) => {
+    return fetch(authHost + '/login', {
+        method: 'POST',
+        body: JSON.stringify({
+            login: login,
+            password: password,
+        }),
+    })
+    .then((response) => {
+            if (response.status === 400) {
+                throw new Error('Неверный запрос')
+            }})
+}
+
+export const registration = (name, login, password) => {
+    return fetch(authHost, {
+        method: 'POST',
+        body: JSON.stringify({
+            name: name,
+            login: login,
+            password: password,
+        }),
+    })
+    .then((response) => {
+            if (response.status === 400) {
+                throw new Error('Неверный запрос')
+            }})
 }
